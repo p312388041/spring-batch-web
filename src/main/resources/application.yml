@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@//localhost:1521/xe
+    username: SYSTEM
+    password: peng414607
+    driver-class-name: oracle.jdbc.OracleDriver
+
+  batch:
+    jdbc:
+      initialize-schema: always
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
