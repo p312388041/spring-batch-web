@@ -1,4 +1,4 @@
-package com.chong.study.factory;
+package com.chong.study.util;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +10,6 @@ public class StudentFactoryTest {
 
     @Test
     void testCreateStudent() {
-        System.out.println(StudentFactory.createStudent());
+        System.out.println(StudentFactory.createStudent(0));
     }
 }
