@@ -20,7 +20,7 @@ public class CsvGeneratorTest {
         stopWatch.start();
         String filePath = "C:\\Users\\31238\\OneDrive\\デスクトップ\\test.csv";
         List<Student> list = new ArrayList<>();
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 10000; i++) {
             list.add(StudentFactory.createStudent(i));
         }
         CsvGenerator.genatate(filePath, list);

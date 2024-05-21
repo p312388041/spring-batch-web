@@ -42,6 +42,9 @@ public class CsvToDbConfiguration {
                 .reader(new StudentItemReader())
                 .processor(processor)
                 .writer(writer)
+                .faultTolerant()
+                .skip(Exception.class)
+                .skipLimit(3)
                 .build();
     }
 

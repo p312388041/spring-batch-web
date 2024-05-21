@@ -1,12 +1,5 @@
 package com.chong.study.batch.mapper;
 
-import java.io.StringReader;
-
-import org.springframework.batch.item.file.LineMapper;
-
-import com.chong.study.pojo.Student;
-import com.opencsv.CSVReader;
-
 // class StudentLineMapper implements LineMapper<Student> {
 //     @Override
 //     public Student mapLine(String line, int lineNumber) throws Exception {

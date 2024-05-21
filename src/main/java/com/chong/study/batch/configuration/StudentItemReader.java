@@ -14,9 +14,7 @@ public class StudentItemReader extends FlatFileItemReader<Student> {
 
     @BeforeStep
     public void beforeStep(StepExecution stepExecution) {
-        System.out.println("----------------------------------start beforeStep");
         jobParameters = stepExecution.getJobParameters();
-        System.out.println(jobParameters);
         setResource(new FileSystemResource(jobParameters.getString(Constans.FILE_PATH)));
         setLineMapper(new StudentLineMapper());
     }

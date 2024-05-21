@@ -9,4 +9,6 @@ public interface StudentMapper {
     void delete(int id);
     void update(Student student);
     Student get(int id);
+    int max();
+    int count();
 }

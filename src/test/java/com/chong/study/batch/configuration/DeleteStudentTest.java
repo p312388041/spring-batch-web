@@ -15,29 +15,23 @@ import org.springframework.batch.test.context.SpringBatchTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.util.StopWatch;
 
 import com.chong.study.Constans;
 import com.chong.study.StudyApplication;
 
-@SpringBatchTest 
+@SpringBatchTest
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = StudyApplication.class)
-public class StudentJobTest {
+public class DeleteStudentTest {
     @Autowired
     private JobLauncherTestUtils jobLauncherTestUtils;
 
     @Autowired
-    Job job;
-
+    Job deleteStduentJob;
+  
     @Test
-    void testStudentJob() throws Exception {
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
-        String filePath = "C:\\Users\\31238\\OneDrive\\デスクトップ\\test.csv";
-        JobParameters jobParameters = new JobParametersBuilder().addString(Constans.FILE_PATH, filePath).toJobParameters();
-        jobLauncherTestUtils.getJobLauncher().run(job, jobParameters);
-        stopWatch.stop();
-        System.out.println(stopWatch.getTotalTimeMillis());
+    void testDeleteStudent() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
+        JobParameters jobParameters = new JobParametersBuilder().addString(Constans.FILE_PATH, "").toJobParameters();
+        jobLauncherTestUtils.getJobLauncher().run(deleteStduentJob, jobParameters);
     }
 }

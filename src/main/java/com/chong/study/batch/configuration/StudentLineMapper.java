@@ -3,10 +3,12 @@ package com.chong.study.batch.configuration;
 import java.io.StringReader;
 
 import org.springframework.batch.item.file.LineMapper;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.chong.study.pojo.Student;
 import com.opencsv.CSVReader;
 
+@Transactional
 public class StudentLineMapper implements LineMapper<Student> {
         @Override
         public Student mapLine(String line, int lineNumber) throws Exception {
