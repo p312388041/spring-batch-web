@@ -1,6 +1,4 @@
-package com.chong.study.batch.configuration;
-
-import javax.sql.DataSource;
+package com.chong.study.batch.tasklet;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -12,23 +10,14 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
-
 import com.chong.study.mapper.StudentMapper;
 
 @Configuration
-public class DeleteDbConfiguration {
+public class DeleteDbTasklet {
 
     @Autowired
     private StudentMapper studentMapper;
-
-    @Bean
-    public Step deleteStduentStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
-
-        return new StepBuilder("deleteStduentStep", jobRepository)
-                .tasklet(deleteStudentTasklet(), transactionManager).build();
-    }
 
     @Bean
     public Job deleteStduentJob(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
@@ -37,13 +26,7 @@ public class DeleteDbConfiguration {
                 .build();
     }
 
-    @Bean
-    public DataSourceTransactionManager batchTransactionManager(DataSource dataSource) {
-        return new DataSourceTransactionManager(dataSource);
-    }
-
-    @Bean
-    public Tasklet deleteStudentTasklet() {
+    private Tasklet deleteStudentTasklet() {
         return (contribution, chunkContext) -> {
             if (studentMapper.count() > 0) {
                 int maxId = studentMapper.max();
@@ -53,5 +36,10 @@ public class DeleteDbConfiguration {
                 return RepeatStatus.FINISHED;
             }
         };
+    }
+
+    private Step deleteStduentStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+        return new StepBuilder("deleteStduentStep", jobRepository)
+                .tasklet(deleteStudentTasklet(), transactionManager).build();
     }
 }
