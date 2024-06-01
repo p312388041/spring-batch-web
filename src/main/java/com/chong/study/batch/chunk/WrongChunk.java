@@ -1,22 +1,16 @@
 package com.chong.study.batch.chunk;
 
 import java.io.StringReader;
-import java.util.Map;
 
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.batch.MyBatisBatchItemWriter;
-import org.mybatis.spring.batch.builder.MyBatisBatchItemWriterBuilder;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.annotation.BeforeStep;
 import org.springframework.batch.core.job.builder.JobBuilder;
-import org.springframework.batch.core.partition.support.Partitioner;
-import org.springframework.batch.core.partition.support.SimplePartitioner;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
-import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.LineMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,20 +28,20 @@ import com.chong.study.util.StudentUtils;
 import com.opencsv.CSVReader;
 
 @Configuration
-public class CsvToDbConfiguration {
+public class WrongChunk {
 
     @Autowired
-    private SqlSessionFactory sqlSessionFactory;
+    private StudentMapper studentMapper;
 
     @Bean
-    public Job job(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
-        return new JobBuilder("job", jobRepository)
-                .start(step(jobRepository, transactionManager))
+    public Job wrongChunkJob(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+        return new JobBuilder("wrongChunkJob", jobRepository)
+                .start(wrongChunkJobStep(jobRepository, transactionManager))
                 .build();
     }
 
-    private Step step(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
-        return new StepBuilder("step", jobRepository)
+    private Step wrongChunkJobStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+        return new StepBuilder("wrongChunkJobStep", jobRepository)
                 .<Student, Student>chunk(1000, transactionManager)
                 .reader(new StudentItemReader())
                 .processor(processor())
@@ -55,15 +49,6 @@ public class CsvToDbConfiguration {
                 // .taskExecutor(taskExecutor())
                 .build();
     }
- 
-    // public Step step1Manager(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
-    //     return new StepBuilder("step1.manager", jobRepository)
-    //             .partitioner("step", new SimplePartitioner())
-    //             .step(step(jobRepository, transactionManager))
-    //             .gridSize(11)
-    //             // .taskExecutor(taskExecutor())
-    //             .build();
-    // }
 
     private ItemProcessor<Student, Student> processor() {
         return (inStudent -> {
@@ -74,10 +59,12 @@ public class CsvToDbConfiguration {
         });
     }
 
-    private MyBatisBatchItemWriter<Student> writer() {
-        return new MyBatisBatchItemWriterBuilder<Student>()
-                .statementId(StudentMapper.class.getName() + ".insert")
-                .sqlSessionFactory(sqlSessionFactory).build();
+    private ItemWriter<Student> writer() {
+        return chunk -> {
+            chunk.getItems().forEach(item -> {
+                studentMapper.insert(item);
+            });
+        };
     }
 
     private static class StudentItemReader extends FlatFileItemReader<Student> {

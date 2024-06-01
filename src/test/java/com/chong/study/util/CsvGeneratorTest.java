@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.StopWatch;
 
+import com.chong.study.Constans;
 import com.chong.study.StudyApplication;
 import com.chong.study.pojo.Student;
 
@@ -18,9 +19,10 @@ public class CsvGeneratorTest {
     void TestGenerateCsv() throws IOException {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        String filePath = "C:\\Users\\31238\\OneDrive\\デスクトップ\\test.csv";
+
+        String filePath = "C:\\Users\\31238\\OneDrive\\デスクトップ\\test_" + Constans.DATA_COUNT + ".csv";
         List<Student> list = new ArrayList<>();
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < Constans.DATA_COUNT; i++) {
             list.add(StudentFactory.createStudent(i));
         }
         CsvGenerator.genatate(filePath, list);

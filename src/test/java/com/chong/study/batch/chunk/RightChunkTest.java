@@ -1,6 +1,7 @@
-package com.chong.study.batch.configuration;
+package com.chong.study.batch.chunk;
 
- 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.batch.core.Job;
@@ -15,25 +16,36 @@ import org.springframework.util.StopWatch;
 
 import com.chong.study.Constans;
 import com.chong.study.StudyApplication;
+import com.chong.study.service.StudentService;
 
-@SpringBatchTest 
+@SpringBatchTest
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = StudyApplication.class)
-public class StudentJobTest {
+public class RightChunkTest {
     @Autowired
     private JobLauncherTestUtils jobLauncherTestUtils;
 
     @Autowired
     Job job;
 
+    @Autowired
+    private StudentService studentService;
+
     @Test
     void testStudentJob() throws Exception {
         StopWatch stopWatch = new StopWatch();
+        JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis())
+                .toJobParameters();
         stopWatch.start();
-        String filePath = "C:\\Users\\31238\\OneDrive\\デスクトップ\\test.csv";
-        JobParameters jobParameters = new JobParametersBuilder().addString(Constans.FILE_PATH, filePath).toJobParameters();
         jobLauncherTestUtils.getJobLauncher().run(job, jobParameters);
         stopWatch.stop();
-        System.out.println(stopWatch.getTotalTimeMillis());
+
+        System.out.println("-------------" + stopWatch.getTotalTimeMillis());
+
+        assertEquals(Constans.DATA_COUNT, studentService.count());
+        studentService.clear();
+        // for(int i= 0;i<10;i++) {
+
+        // }
     }
 }

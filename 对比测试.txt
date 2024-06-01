@@ -1,0 +1,7 @@
+构造业务：
+读文件，简单处理，写数据库
+
+不使用spring batch         错误使用spring batch              正确使用spring batch    
+
+
+批量读取，逐条写                读一条，写一条             使用chunk，设置好reader和writer

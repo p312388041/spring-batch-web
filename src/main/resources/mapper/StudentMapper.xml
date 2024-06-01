@@ -40,6 +40,10 @@
     <delete id="delete">
         delete from student where id = #{id}
     </delete>
+
+    <delete id="clear">
+        truncate table student
+    </delete>
 </mapper>
 
  
