@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // @RestController
 public class StudyApplication  {
 	public static void main(String[] args) {
+		System.out.println(Runtime.getRuntime().availableProcessors());
 		SpringApplication.run(StudyApplication.class, args);
 	} 
 }

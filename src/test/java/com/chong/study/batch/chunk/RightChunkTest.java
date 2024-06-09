@@ -33,11 +33,13 @@ public class RightChunkTest {
 
     @Test
     void testStudentJob() throws Exception {
+
         StopWatch stopWatch = new StopWatch();
         JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis())
                 .toJobParameters();
         stopWatch.start();
         jobLauncherTestUtils.getJobLauncher().run(job, jobParameters);
+        System.out.println("--------------" + Thread.activeCount() + "--------------");
         stopWatch.stop();
 
         System.out.println("-------------" + stopWatch.getTotalTimeMillis());
