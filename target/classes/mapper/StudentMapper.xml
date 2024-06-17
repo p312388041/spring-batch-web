@@ -23,7 +23,9 @@
     <insert id="insert" parameterType="com.chong.study.pojo.Student">
         <selectKey keyProperty="id" resultType="int" order="BEFORE">
             select STUDENT_SQUENCE.NEXTVAL FROM DUAL
+
         </selectKey>
+        ${@com.chong.study.Printer@print()} 
        insert into student values(#{id}, #{name}, #{chinese}, #{english}, #{math}, #{total})
     </insert>
 

@@ -17,16 +17,15 @@ public class CsvGeneratorTest {
 
     @Test
     void TestGenerateCsv() throws IOException {
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
-
-        String filePath = "C:\\Users\\31238\\OneDrive\\デスクトップ\\test_" + Constans.DATA_COUNT + ".csv";
         List<Student> list = new ArrayList<>();
         for (int i = 0; i < Constans.DATA_COUNT; i++) {
             list.add(StudentFactory.createStudent(i));
         }
-        CsvGenerator.genatate(filePath, list);
-        stopWatch.stop();
-        System.out.println(stopWatch.getTotalTimeMillis());
+
+        // String filePath = "C:\\Users\\31238\\OneDrive\\デスクトップ\\test_" + Constans.DATA_COUNT + ".csv";
+        // CsvGenerator.genatate(filePath, list);
+        
+        String forlderPath = "C:\\Users\\31238\\OneDrive\\デスクトップ\\test_" + Constans.DATA_COUNT;
+        CsvGenerator.generatePartitionFiles(forlderPath, Constans.PARTITION_SIZE, list);
     }
 }

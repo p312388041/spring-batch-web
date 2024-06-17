@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.chong.study.Constans;
@@ -30,9 +29,5 @@ public class NotUseBatch {
             studentMapper.insert(student);
         });
         reader.close();
-    }
-
-    public void begin() {
-        System.out.println("haha");
-    }
+    } 
 }

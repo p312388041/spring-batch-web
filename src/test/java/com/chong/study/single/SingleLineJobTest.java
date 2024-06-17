@@ -25,15 +25,14 @@ public class SingleLineJobTest {
 
     @Test
     public void testProcess() throws CsvValidationException, IOException, InterruptedException {
-        singleLineJob.begin();
         // for (int i = 0; i < 10; i++) {
-            StopWatch stopWatch = new StopWatch();
-            stopWatch.start();
-            singleLineJob.process();
-            stopWatch.stop();
-            System.out.println("-------------" + stopWatch.getTotalTimeMillis());
-            assertEquals(studentService.count(), Constans.DATA_COUNT);
-            // studentService.clear();
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        singleLineJob.process();
+        stopWatch.stop();
+        System.out.println("-------------" + stopWatch.getTotalTimeMillis());
+        assertEquals(studentService.count(), Constans.DATA_COUNT);
+        studentService.clear();
         // }
     }
 }

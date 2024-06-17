@@ -26,7 +26,8 @@ public class RightChunkTest {
     private JobLauncherTestUtils jobLauncherTestUtils;
 
     @Autowired
-    Job job;
+    // Job job;
+    Job partitionJob;
 
     @Autowired
     private StudentService studentService;
@@ -38,7 +39,7 @@ public class RightChunkTest {
         JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis())
                 .toJobParameters();
         stopWatch.start();
-        jobLauncherTestUtils.getJobLauncher().run(job, jobParameters);
+        jobLauncherTestUtils.getJobLauncher().run(partitionJob, jobParameters);
         System.out.println("--------------" + Thread.activeCount() + "--------------");
         stopWatch.stop();
 
@@ -46,8 +47,5 @@ public class RightChunkTest {
 
         assertEquals(Constans.DATA_COUNT, studentService.count());
         studentService.clear();
-        // for(int i= 0;i<10;i++) {
-
-        // }
     }
 }
