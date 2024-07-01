@@ -46,7 +46,7 @@ public class WrongChunk {
                 .reader(new StudentItemReader())
                 .processor(processor())
                 .writer(writer())
-                // .taskExecutor(taskExecutor())
+                .taskExecutor(taskExecutor())
                 .build();
     }
 

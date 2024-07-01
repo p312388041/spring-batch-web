@@ -47,6 +47,6 @@ public class WrongTaskletTest {
         System.out.println("-------------" + stopWatch.getTotalTimeMillis());
 
         assertEquals(studentService.count(), Constans.DATA_COUNT);
-        // studentService.clear();
+        studentService.clear();
     }
 }
