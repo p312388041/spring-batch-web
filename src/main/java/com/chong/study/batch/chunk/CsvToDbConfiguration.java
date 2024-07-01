@@ -30,11 +30,8 @@ import com.chong.study.pojo.Student;
 import com.chong.study.util.StudentUtils;
 import com.opencsv.CSVReader;
 
+@Configuration
 public class CsvToDbConfiguration {
-
-    @Autowired
-    private StudentItemReader studentItemReader;
-
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
 
@@ -48,7 +45,7 @@ public class CsvToDbConfiguration {
     private Step step(JobRepository jobRepository, PlatformTransactionManager transactionManager) throws IOException {
         return new StepBuilder("step", jobRepository)
                 .<Student, Student>chunk(100, transactionManager)
-                .reader(studentItemReader)
+                .reader(new StudentItemReader())
                 .processor(processor())
                 .writer(writer())
                 // .stepOperations(getOperations())
@@ -147,12 +144,14 @@ public class CsvToDbConfiguration {
         return taskExecutor;
     }
 
-    
     private static class StudentItemReader extends FlatFileItemReader<Student> {
 
-        @BeforeStep
-        public void beforeStep(StepExecution stepExecution) {
-
+        // @BeforeStep
+        // public void beforeStep(StepExecution stepExecution) {
+        // setResource(new FileSystemResource(Constans.INPUT_FILE_PATH));
+        // setLineMapper(studentLineMapper());
+        // }
+        StudentItemReader() {
             setResource(new FileSystemResource(Constans.INPUT_FILE_PATH));
             setLineMapper(studentLineMapper());
         }
