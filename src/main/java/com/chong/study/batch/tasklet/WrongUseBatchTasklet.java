@@ -30,9 +30,9 @@ public class WrongUseBatchTasklet {
     private StudentMapper studentMapper;
 
     @Bean
-    public Job wrongUseBatchJob(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
-        return new JobBuilder("wrongUseBatchJob", jobRepository)
-                .start(wrongUseBatchTasklet(jobRepository, transactionManager))
+    public Job taskletJob(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+        return new JobBuilder("taskletJob", jobRepository)
+                .start(taskletStep(jobRepository, transactionManager))
                 .build();
     }
 
@@ -49,8 +49,8 @@ public class WrongUseBatchTasklet {
         };
     }
 
-    private Step wrongUseBatchTasklet(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
-        return new StepBuilder("wrongUseBatchTasklet", jobRepository)
+    private Step taskletStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+        return new StepBuilder("taskletStep", jobRepository)
                 .tasklet(wrongUseBatchTasklet(), transactionManager).build();
     }
 }

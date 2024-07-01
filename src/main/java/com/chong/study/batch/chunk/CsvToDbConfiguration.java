@@ -20,8 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.task.SimpleAsyncTaskExecutor;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import com.chong.study.Constans;
@@ -31,7 +29,7 @@ import com.chong.study.util.StudentUtils;
 import com.opencsv.CSVReader;
 
 @Configuration
-public class CsvToDbConfiguration {
+public class CsvToDbConfiguration { 
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
 
@@ -48,24 +46,8 @@ public class CsvToDbConfiguration {
                 .reader(new StudentItemReader())
                 .processor(processor())
                 .writer(writer())
-                // .stepOperations(getOperations())
-                // .faultTolerant()
-                // .skip(Exception.class)
-                // .skipLimit(10)
-                // .listener(skipListener())
-                .taskExecutor(taskExecutor())
                 .build();
     }
-
-    // public Step step1Manager(JobRepository jobRepository,
-    // PlatformTransactionManager transactionManager) {
-    // return new StepBuilder("step1.manager", jobRepository)
-    // .partitioner("step", new SimplePartitioner())
-    // .step(step(jobRepository, transactionManager))
-    // .gridSize(11)
-    // // .taskExecutor(taskExecutor())
-    // .build();
-    // }
 
     private ItemProcessor<Student, Student> processor() {
 
@@ -84,74 +66,12 @@ public class CsvToDbConfiguration {
                 .sqlSessionFactory(sqlSessionFactory).build();
         return writer;
     }
-
-    // private SkipListener skipListener() throws IOException {
-    // return new SkipListener<Student, Student>() {
-    // private AtomicInteger index = new AtomicInteger(0);
-    // private CSVWriter writer = new CSVWriter(new
-    // FileWriter(Constans.INPUT_FILE_PATH + "_error"));
-
-    // @Override
-    // public void onSkipInProcess(Student item, Throwable t) {
-    // System.out.println("--------------process");
-    // SkipListener.super.onSkipInProcess(item, t);
-    // writer.writeNext(new String[] { item.toString() });
-    // try {
-    // writer.flush();
-    // } catch (IOException e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // }
-    // }
-
-    // @Override
-    // public void onSkipInRead(Throwable t) {
-    // System.out.println("--------------read" + index.getAndIncrement());
-    // FlatFileParseException except = (FlatFileParseException) t;
-    // writer.writeNext(new String[] { except.getInput() });
-    // try {
-    // writer.flush();
-    // } catch (IOException e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // }
-    // SkipListener.super.onSkipInRead(t);
-
-    // }
-
-    // @Override
-    // public void onSkipInWrite(Student item, Throwable t) {
-    // writer.writeNext(new String[] { item.toString() });
-    // System.out.println("--------------write");
-    // try {
-    // writer.flush();
-    // } catch (IOException e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // }
-    // // TODO Auto-generated method stub
-    // SkipListener.super.onSkipInWrite(item, t);
-    // }
-
-    // };
-    // }
-
-    private TaskExecutor taskExecutor() {
-        // return new ConcurrentTaskExecutor(Executors.newFixedThreadPool(10));
-        SimpleAsyncTaskExecutor taskExecutor = new SimpleAsyncTaskExecutor();
-
-        // taskExecutor.setVirtualThreads(true);
-        return taskExecutor;
-    }
-
+  
     private static class StudentItemReader extends FlatFileItemReader<Student> {
 
-        // @BeforeStep
-        // public void beforeStep(StepExecution stepExecution) {
-        // setResource(new FileSystemResource(Constans.INPUT_FILE_PATH));
-        // setLineMapper(studentLineMapper());
-        // }
-        StudentItemReader() {
+        @BeforeStep
+        public void beforeStep(StepExecution stepExecution) {
+
             setResource(new FileSystemResource(Constans.INPUT_FILE_PATH));
             setLineMapper(studentLineMapper());
         }
