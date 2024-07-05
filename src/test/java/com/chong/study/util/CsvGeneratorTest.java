@@ -21,10 +21,10 @@ public class CsvGeneratorTest {
             list.add(StudentFactory.createStudent(i));
         }
 
-        // String filePath = "C:\\Users\\31238\\OneDrive\\デスクトップ\\test_" + Constans.DATA_COUNT + ".csv";
-        // CsvGenerator.genatate(filePath, list);
+        String filePath = "C:\\Users\\31238\\OneDrive\\デスクトップ\\test_" + Constans.DATA_COUNT + ".csv";
+        CsvGenerator.genatate(filePath, list);
         
-        String forlderPath = "C:\\Users\\31238\\OneDrive\\デスクトップ\\test_" + Constans.DATA_COUNT;
-        CsvGenerator.generatePartitionFiles(forlderPath, Constans.PARTITION_SIZE, list);
+        // String forlderPath = "C:\\Users\\31238\\OneDrive\\デスクトップ\\test_" + Constans.DATA_COUNT;
+        // CsvGenerator.generatePartitionFiles(forlderPath, Constans.PARTITION_SIZE, list);
     }
 }

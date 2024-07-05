@@ -15,6 +15,8 @@ public class StudentItemProcesser implements ItemProcessor<Student, Student> {
         Student outStudent = new Student(item.getId(), item.getName(), item.getChinese(),
                 item.getEnglish(), item.getMath());
         outStudent.setTotal(item.getChinese() + item.getEnglish() + item.getMath());
+        // System.out.println("--dataId: " + item.getId() + "-----process-------" + Thread.currentThread().threadId()
+        // + "--------------");
         return outStudent;
     }
 }

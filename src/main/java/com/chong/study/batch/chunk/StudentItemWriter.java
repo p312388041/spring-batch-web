@@ -3,6 +3,7 @@ package com.chong.study.batch.chunk;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.batch.MyBatisBatchItemWriter;
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.item.Chunk;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,5 +16,12 @@ public class StudentItemWriter extends MyBatisBatchItemWriter<Student> {
     StudentItemWriter(@Autowired SqlSessionFactory sqlSessionFactory) {
         setStatementId(StudentMapper.class.getName() + ".insert");
         setSqlSessionFactory(sqlSessionFactory);
+    }
+
+    @Override
+    public void write(Chunk<? extends Student> items) {
+        System.out.println("-----********write***********-------" + Thread.currentThread().threadId()
+                + "--------------");
+        super.write(items);
     }
 }

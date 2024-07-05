@@ -5,7 +5,6 @@ import java.util.List;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParametersInvalidException;
-import org.springframework.batch.core.configuration.xml.StepParserStepFactoryBean;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
@@ -45,7 +44,7 @@ public class StudyApplication {
         } else {
             job = (Job) context.getBean(jobName);
         }
-        StepParserStepFactoryBean bean = new StepParserStepFactoryBean<>();
+        // StepParserStepFactoryBean bean = new StepParserStepFactoryBean<>();
 
         System.out.println("-------------" + job);
         // jobService.getJobLauncher().run(job,
