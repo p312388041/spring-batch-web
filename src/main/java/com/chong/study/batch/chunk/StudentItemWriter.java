@@ -20,8 +20,11 @@ public class StudentItemWriter extends MyBatisBatchItemWriter<Student> {
 
     @Override
     public void write(Chunk<? extends Student> items) {
-        System.out.println("-----********write***********-------" + Thread.currentThread().threadId()
-                + "--------------");
+        String idString = String.join(",",
+                items.getItems().stream().map(student -> student.getId()).map(data -> data + "").toList());
+        System.out
+                .println("-----********id---list********" + idString + "****-------" + Thread.currentThread().threadId()
+                        + "--------------");
         super.write(items);
     }
 }
