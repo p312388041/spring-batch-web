@@ -21,6 +21,8 @@ public class CsvToDbConfiguration {
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
 
+    private StudentItemReader reader = new StudentItemReader();
+
     @Bean
     public Job job(JobRepository jobRepository, PlatformTransactionManager transactionManager) throws IOException {
         return new JobBuilder("job", jobRepository)
@@ -31,7 +33,7 @@ public class CsvToDbConfiguration {
     private Step step(JobRepository jobRepository, PlatformTransactionManager transactionManager) throws IOException {
         return new StepBuilder("step", jobRepository)
                 .<Student, Student>chunk(100, transactionManager)
-                .reader(new StudentItemReader())
+                .reader(reader)
                 .processor(new StudentItemProcesser())
                 .writer(new StudentItemWriter(sqlSessionFactory))
                 .taskExecutor(new SimpleAsyncTaskExecutor())
