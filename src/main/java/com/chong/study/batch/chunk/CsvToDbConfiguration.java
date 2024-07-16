@@ -1,6 +1,7 @@
 package com.chong.study.batch.chunk;
 
 import java.io.IOException;
+import java.util.concurrent.Executors;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.batch.core.Job;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.concurrent.ConcurrentTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import com.chong.study.pojo.Student;
@@ -32,11 +35,18 @@ public class CsvToDbConfiguration {
 
     private Step step(JobRepository jobRepository, PlatformTransactionManager transactionManager) throws IOException {
         return new StepBuilder("step", jobRepository)
-                .<Student, Student>chunk(100, transactionManager)
+                .<Student, Student>chunk(90, transactionManager)
                 .reader(reader)
                 .processor(new StudentItemProcesser())
                 .writer(new StudentItemWriter(sqlSessionFactory))
-                .taskExecutor(new SimpleAsyncTaskExecutor())
+                .taskExecutor(taskExecutor())
                 .build();
+    }
+
+    private TaskExecutor taskExecutor() {
+        SimpleAsyncTaskExecutor executor = new SimpleAsyncTaskExecutor();
+        executor.setVirtualThreads(false);
+        return executor;
+        // return new ConcurrentTaskExecutor(Executors.newFixedThreadPool(3));
     }
 }

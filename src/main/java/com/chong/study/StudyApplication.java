@@ -10,6 +10,7 @@ import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteExcep
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,9 @@ public class StudyApplication {
     private ConfigurableApplicationContext context;
 
     public static void main(String[] args) throws Exception {
+        // SpringApplication application = new SpringApplication(StudyApplication.class);
+        // application.setWebApplicationType(WebApplicationType.NONE);
+        // application.run(args);
         SpringApplication.run(StudyApplication.class, args);
     }
 

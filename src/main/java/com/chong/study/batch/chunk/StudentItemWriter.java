@@ -24,7 +24,7 @@ public class StudentItemWriter extends MyBatisBatchItemWriter<Student> {
                 items.getItems().stream().map(student -> student.getId()).map(data -> data + "").toList());
         System.out
                 .println("-----********id---list********" + idString + "****-------" + Thread.currentThread().threadId()
-                        + "--------------");
+                        + "-------total: -------" + items.size());
         super.write(items);
     }
 }

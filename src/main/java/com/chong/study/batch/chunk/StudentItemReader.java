@@ -47,6 +47,4 @@ public class StudentItemReader extends FlatFileItemReader<Student> {
             return StudentUtils.parseLineToStudent(fileds);
         };
     }
-
-    
 }
