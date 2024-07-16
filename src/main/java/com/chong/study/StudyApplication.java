@@ -5,12 +5,12 @@ import java.util.List;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParametersInvalidException;
-import org.springframework.batch.core.configuration.xml.StepParserStepFactoryBean;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
@@ -21,15 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 @RestController
 @Configuration
-public class StudyApplication {
-
-    @Autowired
-    private JobService jobService;
-
+public class StudyApplication { 
     @Autowired
     private ConfigurableApplicationContext context;
 
     public static void main(String[] args) throws Exception {
+        // SpringApplication application = new SpringApplication(StudyApplication.class);
+        // application.setWebApplicationType(WebApplicationType.NONE);
+        // application.run(args);
         SpringApplication.run(StudyApplication.class, args);
     }
 
@@ -49,12 +48,12 @@ public class StudyApplication {
         } else {
             job = (Job) context.getBean(jobName);
         }
-        StepParserStepFactoryBean bean = new StepParserStepFactoryBean<>();
+        // StepParserStepFactoryBean bean = new StepParserStepFactoryBean<>();
 
         System.out.println("-------------" + job);
         // jobService.getJobLauncher().run(job,
         // new JobParametersBuilder().addLong("unique",
         // System.currentTimeMillis()).toJobParameters());
         return "hello world";
-    }
+    } 
 }
