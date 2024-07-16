@@ -25,7 +25,6 @@
             select STUDENT_SQUENCE.NEXTVAL FROM DUAL
 
         </selectKey>
-        ${@com.chong.study.Printer@print()} 
        insert into student values(#{id}, #{name}, #{chinese}, #{english}, #{math}, #{total})
     </insert>
 

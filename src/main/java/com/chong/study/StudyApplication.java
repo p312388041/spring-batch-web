@@ -4,14 +4,11 @@ import java.util.List;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.batch.core.configuration.xml.StepParserStepFactoryBean;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
-import org.springframework.batch.core.step.builder.JobStepBuilder;
-import org.springframework.batch.core.step.job.JobStep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

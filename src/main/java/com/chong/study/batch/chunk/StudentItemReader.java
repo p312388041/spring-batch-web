@@ -24,7 +24,7 @@ public class StudentItemReader extends FlatFileItemReader<Student> {
     // setLineMapper(studentLineMapper());
     // }
 
-   public StudentItemReader() {
+    public StudentItemReader() {
         setResource(new FileSystemResource(Constans.INPUT_FILE_PATH));
         setLineMapper(studentLineMapper());
     }
@@ -34,7 +34,6 @@ public class StudentItemReader extends FlatFileItemReader<Student> {
             CSVReader csvReader = new CSVReader(new StringReader(line));
             String[] fileds = csvReader.readAll().get(0);
             csvReader.close();
-            System.out.println("-------reader-------" + Thread.currentThread().threadId() + "--------------");
             return StudentUtils.parseLineToStudent(fileds);
         };
     }

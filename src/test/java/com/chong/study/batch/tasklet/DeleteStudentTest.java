@@ -1,6 +1,5 @@
 package com.chong.study.batch.tasklet;
 
- 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.batch.core.Job;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.chong.study.Constans;
 import com.chong.study.StudyApplication;
 
 @SpringBatchTest
@@ -28,10 +26,12 @@ public class DeleteStudentTest {
 
     @Autowired
     Job deleteStduentJob;
-  
+
     @Test
-    void testDeleteStudent() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
-        JobParameters jobParameters = new JobParametersBuilder().addString(Constans.FILE_PATH, "").toJobParameters();
+    void testDeleteStudent() throws JobExecutionAlreadyRunningException, JobRestartException,
+            JobInstanceAlreadyCompleteException, JobParametersInvalidException {
+        JobParameters jobParameters = new JobParametersBuilder().addString("unique", System.currentTimeMillis() + "")
+                .toJobParameters();
         jobLauncherTestUtils.getJobLauncher().run(deleteStduentJob, jobParameters);
     }
 }
