@@ -40,6 +40,7 @@ public class StudyApplication {
             System.out.println("----------" + name);
         }
         Job job = null;
+        @SuppressWarnings("unchecked")
         List<Job> jobs = ((List<Job>) context.getBean("jobs")).stream().filter(j -> j.getName().equals(jobName))
                 .toList();
         if (jobs.size() > 0) {
