@@ -10,7 +10,6 @@ import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteExcep
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
@@ -41,6 +40,7 @@ public class StudyApplication {
             System.out.println("----------" + name);
         }
         Job job = null;
+        @SuppressWarnings("unchecked")
         List<Job> jobs = ((List<Job>) context.getBean("jobs")).stream().filter(j -> j.getName().equals(jobName))
                 .toList();
         if (jobs.size() > 0) {
